@@ -71,7 +71,7 @@ function CountDownTimer() {
             <div class="countdown-container">
                 {timerComponents.length ? timerComponents : <span>Game on!</span>}
             </div>
-
+        <br/>
         </div>
 
     );
@@ -125,8 +125,8 @@ function TournamentRules() {
             </ul>
 
             <Typography variant="h6">Points Table</Typography>
-
             <PointTable/>
+            <br/>
         </div>
     )
 }
@@ -134,8 +134,9 @@ function TournamentRules() {
 
 function ParticipantTable() {
     const participant_rows = [
-        {'activision_id': 'ApacheBadIndian', 'stream_url': '#', 'stream_service': 'Twitch'},
-        {'activision_id': 'ParvDawg', 'stream_url': '#', 'stream_service': 'Twitch'},
+        {'activision_id': 'ApacheBadIndian', 'avatar_url':'https://static-cdn.jtvnw.net/jtv_user_pictures/d15acf18-4c1c-4ad7-88ff-729f2bebf6b1-profile_image-70x70.png', 'stream_url': 'https://www.twitch.tv/apachebadindian', 'stream_service': 'Twitch'},
+        {'activision_id': 'ParvDawg', 'avatar_url':'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-50x50.png', 'stream_url': 'https://www.twitch.tv/parvdawg', 'stream_service': 'Twitch'},
+        {'activision_id': 'MigzzyLive', 'avatar_url':'https://static-cdn.jtvnw.net/jtv_user_pictures/1a6805cc-32cd-42e8-8bd7-32a94d31025d-profile_image-70x70.jpeg', 'stream_url': 'https://www.twitch.tv/migzzylive', 'stream_service': 'Twitch'},
 
     ]
     const classes = useStyles();
@@ -153,8 +154,8 @@ function ParticipantTable() {
                 <TableBody>
                     {participant_rows.map((row) => (
                         <TableRow key={row.name}>
-                            <TableCell align="right"><Avatar alt="Remy Sharp"
-                                                             src="/static/images/avatar/1.jpg"/></TableCell>
+                            <TableCell align="right"><Avatar alt={row.activision_id}
+                                                             src={row.avatar_url}/></TableCell>
                             <TableCell component="th" scope="row">{row.activision_id}</TableCell>
                             <TableCell align="right"><a href={row.stream_url}>{row.stream_service}</a></TableCell>
 
@@ -171,27 +172,52 @@ function ParticipantList() {
         <div>
             <Typography variant="h4">Participant List</Typography>
             <ParticipantTable/>
+            <br/>
         </div>
     )
 }
 
+
+function LeaderBoardTable() {
+    const participant_rows = [
+        {'activision_id': 'ApacheBadIndian', 'stream_url': 'https://www.twitch.tv/apachebadindian', 'stream_service': 'Twitch'},
+        {'activision_id': 'ParvDawg', 'stream_url': 'https://www.twitch.tv/parvdawg', 'stream_service': 'Twitch'},
+        {'activision_id': 'MigzzyLive', 'stream_url': 'https://www.twitch.tv/migzzylive', 'stream_service': 'Twitch'},
+
+    ]
+    const classes = useStyles();
+    return (
+        <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Postion</TableCell>
+                        <TableCell>Activision ID</TableCell>
+                        <TableCell align="right">Points</TableCell>
+
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {participant_rows.map((row) => (
+                        <TableRow key={row.name}>
+                            <TableCell align="right">--</TableCell>
+                            <TableCell component="th" scope="row">{row.activision_id}</TableCell>
+                            <TableCell align="right">0</TableCell>
+
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+}
+
+
 function LeaderBoard() {
     return (
         <div>
-            <h3>Leaderboard</h3>
-            <table>
-                <tr>
-                    <td>Position</td>
-                    <td>User</td>
-                    <td>Points</td>
-                </tr>
-                <tr>
-                    <td>--</td>
-                    <td>ApacheBadIndian</td>
-                    <td>0</td>
-                </tr>
-
-            </table>
+            <Typography variant="h4">Leaderboard</Typography>
+            <LeaderBoardTable/>
         </div>
     )
 }
