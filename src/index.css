@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.countdown-container {
+  position: relative;
+  height: 80px;
+}
+
+.countdown {
+  width: 70px;
+  height: 70px;
+  float: left;
+}
+
+.countdown-value {
+  font-size: 2.5rem;
+  width: 70px;
+  top:1px;
+}
+
+.countdown-interval {
+  float: left;
+  width: 70px;
+
+
+}
