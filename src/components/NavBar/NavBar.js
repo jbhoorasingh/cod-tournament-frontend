@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
@@ -32,10 +33,9 @@ export default function NavBar() {
                 setValue(newValue);
             }}
             showLabels
-            className={classes.root}
-        >
-            <BottomNavigationAction label="Home"  href='/' icon={<HomeIcon/>}/>
-            <BottomNavigationAction label="Recent" href='/recent' icon={<RestoreIcon/>}/>
+            className={classes.root}>
+            <BottomNavigationAction label="Home"  component={Link} to='/' value="/" icon={<HomeIcon/>}/>
+            <BottomNavigationAction label="Recent"  component={Link} to='/recent' icon={<RestoreIcon/>}/>
             <BottomNavigationAction label="Account" icon={<PersonIcon/>}/>
         </BottomNavigation>
         </AppBar>
