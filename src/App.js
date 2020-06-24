@@ -6,7 +6,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import 'fontsource-roboto';
-import {NavBar} from "./components"
+import {Login, NavBar} from "./components"
 import {HomePage, RecentPage} from "./pages";
 
 
@@ -26,6 +26,9 @@ function App() {
                             <Switch>
                                 <Route exact path="/">
                                     <HomePage/>
+                                </Route>
+                                <Route exact path="/login">
+                                    <Login />
                                 </Route>
                                 <Route exact path="/recent">
                                     <RecentPage/>
