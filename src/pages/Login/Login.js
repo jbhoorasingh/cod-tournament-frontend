@@ -13,19 +13,17 @@ export default function Login() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        console.log("Hello")
     }
 
     return (
         <div className="Login">
             <form onSubmit={handleSubmit}>
                 <FormGroup controlId="email" bsSize="large">
-                    {/*<ControlLabel>Email</ControlLabel>*/}
-
-
                     <FormControl>
                         <InputLabel htmlFor="email">Email</InputLabel>
                         <Input
-                            id="password"
+                            id="email"
                             autoFocus
                             type="email"
                             value={email}
@@ -34,7 +32,6 @@ export default function Login() {
                     </FormControl>
                 </FormGroup>
                 <FormGroup controlId="password" bsSize="large">
-                    {/*<ControlLabel>Password</ControlLabel>*/}
                     <FormControl>
                         <InputLabel htmlFor="password">Password</InputLabel>
                         <Input

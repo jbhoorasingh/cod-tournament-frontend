@@ -6,8 +6,8 @@ import {HashRouter, Route, Switch} from "react-router-dom";
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import 'fontsource-roboto';
-import {Login, NavBar, Signup} from "./components";
-import {HomePage, RecentPage} from "./pages";
+import { NavBar, Signup} from "./components";
+import {Login, HomePage, RecentPage} from "./pages";
 
 
 
