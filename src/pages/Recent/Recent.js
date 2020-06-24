@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
+import "./Recent.css";
 
 const useStyles = makeStyles((theme) => ({
     avatarroot: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 function TournamentCard(props) {
     const classes = useStyles();
     return (
-        <Card className={classes.root}>
+        <Card className="Card">
             <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                     {props.props.type}
