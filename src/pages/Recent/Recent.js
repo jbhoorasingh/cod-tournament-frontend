@@ -70,12 +70,15 @@ function TournamentCard(props) {
 
 
 function TournamentCardList(props) {
-
     console.log(props)
     return (
+
         props.props.map(tournament => (
-        <TournamentCard props={tournament}/>
-    )))
+                <TournamentCard props={tournament}/>
+        ))
+
+
+    );
 }
 
 export default function RecentPage() {
@@ -155,6 +158,7 @@ export default function RecentPage() {
 
     return (
         <div>
+            <Typography variant="h2">All Tournaments</Typography>
             <TournamentCardList props={tournaments}/>
 
         </div>
