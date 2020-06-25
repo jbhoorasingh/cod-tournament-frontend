@@ -2,12 +2,12 @@
 import './App.css';
 
 import React, {} from "react";
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 import {createMuiTheme, responsiveFontSizes, ThemeProvider} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import 'fontsource-roboto';
-import {NavBar} from "./components"
-import {HomePage, RecentPage} from "./pages";
+import { NavBar, Signup} from "./components";
+import {Login, HomePage, RecentPage} from "./pages";
 
 
 
@@ -19,21 +19,26 @@ function App() {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <div style={{marginBottom: 66 + 'px'}}>
-                    <Container maxWidth="md">
+                <HashRouter>
+                    <div style={{marginBottom: 66 + 'px'}}>
+                        <Container maxWidth="md">
 
-                        <Router>
+
                             <Switch>
                                 <Route exact path="/">
                                     <HomePage/>
+                                </Route>
+                                <Route exact path="/login">
+                                    <Login/>
                                 </Route>
                                 <Route exact path="/recent">
                                     <RecentPage/>
                                 </Route>
                             </Switch>
-                        </Router>
-                    </Container></div>
-                <NavBar/>
+
+                        </Container></div>
+                    <NavBar/>
+                </HashRouter>
             </ThemeProvider>
         </div>
 

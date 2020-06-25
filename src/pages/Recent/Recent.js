@@ -7,6 +7,7 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
+import "./Recent.css";
 
 const useStyles = makeStyles((theme) => ({
     avatarroot: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 function TournamentCard(props) {
     const classes = useStyles();
     return (
-        <Card className={classes.root}>
+        <Card className="Card">
             <CardContent>
                 <Typography className={classes.title} color="textSecondary" gutterBottom>
                     {props.props.type}
@@ -70,11 +71,15 @@ function TournamentCard(props) {
 
 function TournamentCardList(props) {
 
-    console.log(props)
+    console.log(props);
     return (
+
         props.props.map(tournament => (
-        <TournamentCard props={tournament}/>
-    )))
+                <TournamentCard props={tournament}/>
+        ))
+
+
+    );
 }
 
 export default function RecentPage() {
@@ -126,34 +131,9 @@ export default function RecentPage() {
     ]
 
 
-    const tournament = {
-        name: "2020 Week 26 - CoD Tournament",
-        type: "Free-For-All - Multiple Rounds",
-        participants: [
-            {
-                'activision_id': 'ApacheBadIndian',
-                'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/d15acf18-4c1c-4ad7-88ff-729f2bebf6b1-profile_image-70x70.png',
-                'stream_url': 'https://www.twitch.tv/apachebadindian',
-                'stream_service': 'Twitch'
-            },
-            {
-                'activision_id': 'ParvDawg',
-                'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-50x50.png',
-                'stream_url': 'https://www.twitch.tv/parvdawg',
-                'stream_service': 'Twitch'
-            },
-            {
-                'activision_id': 'MigzzyLive',
-                'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/1a6805cc-32cd-42e8-8bd7-32a94d31025d-profile_image-70x70.jpeg',
-                'stream_url': 'https://www.twitch.tv/migzzylive',
-                'stream_service': 'Twitch'
-            },
-
-        ]
-    }
-
     return (
         <div>
+            <Typography variant="h2">All Tournaments</Typography>
             <TournamentCardList props={tournaments}/>
 
         </div>
