@@ -38,7 +38,7 @@ function getMoviesFromApiAsync() {
 
 function CountDownTimer() {
     const calculateTimeLeft = () => {
-        const difference = +new Date("2020-06-24T19:30:00") - +new Date();
+        const difference = +new Date("2020-06-25T19:30:00") - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
