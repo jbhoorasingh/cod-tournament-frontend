@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -23,17 +23,18 @@ const useStyles = makeStyles({
 // theme = responsiveFontSizes(theme);
 //https://drive.google.com/uc?export=view&id=1qjEVTNJ_STdX6tl9qZEvlrLBln4qtqDb
 //let url_request ='https://drive.google.com/uc?export=view&id=1qjEVTNJ_STdX6tl9qZEvlrLBln4qtqDb'
-let url_request ='https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d'
+let url_request = 'https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d'
+
 function getMoviesFromApiAsync() {
-   return fetch(url_request, {mode: 'cors'})
-   .then((response) => response.json())
-   .then((responseJson) => {
-       console.log(responseJson)
-     return responseJson.movies;
-   })
-   .catch((error) => {
-     console.error(error);
-   });
+    return fetch(url_request, {mode: 'cors'})
+        .then((response) => response.json())
+        .then((responseJson) => {
+            console.log(responseJson)
+            return responseJson.movies;
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 function CountDownTimer() {
@@ -145,9 +146,11 @@ function TournamentRules() {
 }
 
 
-function ParticipantTable() {
+function ParticipantTable(participants) {
     console.log(`ParticipantTable`)
-    console.log()
+    console.log(participants)
+
+
     const participant_rows = [
         {
             'activision_id': 'ApacheBadIndian',
@@ -176,12 +179,11 @@ function ParticipantTable() {
         },
 
 
-
     ]
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table" >
+            <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
                         <TableCell></TableCell>
@@ -191,7 +193,7 @@ function ParticipantTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {participant_rows.map((row) => (
+                    {participants.participants.participants.map((row) => (
                         <TableRow key={row.name}>
                             <TableCell align="right"><Avatar alt={row.activision_id}
                                                              src={row.avatar_url}/></TableCell>
@@ -206,26 +208,28 @@ function ParticipantTable() {
     )
 }
 
-function ParticipantList() {
+function ParticipantList(participants) {
     return (
         <div>
             <Typography variant="h4">Participant List</Typography>
-            <ParticipantTable/>
+            <ParticipantTable participants={participants}/>
+
             <br/>
         </div>
     )
 }
 
 
-function LeaderBoardTable() {
+function LeaderBoardTable(participants) {
+    console.log(participants)
     const participant_rows = [
         {
             'activision_id': 'ApacheBadIndian',
             'stream_url': 'https://www.twitch.tv/apachebadindian',
             'stream_service': 'Twitch'
         },
-        {'activision_id': 'ParvDawg',  'points': 0},
-        {'activision_id': 'CreepyCap75',  'points': 0},
+        {'activision_id': 'ParvDawg', 'points': 0},
+        {'activision_id': 'CreepyCap75', 'points': 0},
         {'activision_id': 'DevilSon2127', 'points': 0},
 
     ]
@@ -242,7 +246,7 @@ function LeaderBoardTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {participant_rows.map((row) => (
+                    {participants.participants.participants.map((row) => (
                         <TableRow key={row.name}>
                             <TableCell align="right">--</TableCell>
                             <TableCell component="th" scope="row">{row.activision_id}</TableCell>
@@ -257,14 +261,62 @@ function LeaderBoardTable() {
 }
 
 
-function LeaderBoard() {
+function LeaderBoard(participants) {
     return (
         <div>
             <Typography variant="h4">Leaderboard</Typography>
-            <LeaderBoardTable/>
+            <LeaderBoardTable participants={participants}/>
         </div>
     )
 }
+
+class NewParticipantList extends React.Component {
+    state = {
+        participants: []
+    }
+
+    componentDidMount() {
+        return fetch(url_request, {mode: 'cors'})
+            .then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson)
+                return responseJson.movies;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+
+    render() {
+        const classes = useStyles();
+        return (
+            <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Postion</TableCell>
+                            <TableCell>Activision ID</TableCell>
+                            <TableCell align="right">Points</TableCell>
+
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.participants.map((row) => (
+                            <TableRow key={row.name}>
+                                <TableCell align="right">--</TableCell>
+                                <TableCell component="th" scope="row">{row.activision_id}</TableCell>
+                                <TableCell align="right">0</TableCell>
+
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        )
+    }
+}
+
 
 function DisplayTwitchStreams() {
     console.log("displaying twitch");
@@ -272,33 +324,101 @@ function DisplayTwitchStreams() {
         {'stream_url': 'apachebadindian'},
         {'stream_url': 'parvdawg'},
         {'stream_url': 'creepycap75'},
+        {'stream_url': 'kalel_soj_ttv'},
 
     ];
-    return(
+    return (
         <div id="stream-container">
             {participant_rows.map((row) => (
-                    <ReactTwitchEmbedVideo
-            channel={row.stream_url}
-            layout="video"
-            height="260"
-            width="400"
-            muted={false}
-            theme="light"/>
-                    ))}
+                <ReactTwitchEmbedVideo
+                    channel={row.stream_url}
+                    layout="video"
+                    height="260"
+                    width="400"
+                    muted={false}
+                    theme="light"/>
+            ))}
 
-            </div>
+        </div>
     )
 }
 
 export default function HomePage() {
-    let participants = getMoviesFromApiAsync();
+    //let participants = getMoviesFromApiAsync();
+    const participants = [
+        {
+            'activision_id': 'ApacheBadIndian',
+            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/d15acf18-4c1c-4ad7-88ff-729f2bebf6b1-profile_image-70x70.png',
+            'stream_url': 'https://www.twitch.tv/apachebadindian',
+            'stream_service': 'Twitch',
+            'points': 0
+        },
+        {
+            'activision_id': 'ParvDawg',
+            'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-70x70.png',
+            'stream_url': 'https://www.twitch.tv/parvdawg',
+            'stream_service': 'Twitch',
+            'points': 0
+        },
+        {
+            'activision_id': 'CreepyCap75',
+            'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/215b7342-def9-11e9-9a66-784f43822e80-profile_image-150x150.png',
+            'stream_url': 'https://www.twitch.tv/parvdawg',
+            'stream_service': 'Twitch',
+            'points': 0
+        },
+
+        {
+            'activision_id': 'DevilSon2127',
+            'avatar_url': '',
+            'stream_url': "#",
+            'stream_service': 'N/A',
+            'points': 0
+        },
+
+        {
+            'activision_id': 'fittedgennaro',
+            'avatar_url': '',
+            'stream_url': "#",
+            'stream_service': 'N/A',
+            'points': 0
+        },
+
+        {
+            'activision_id': 'kalelsonofjorel',
+            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/e6f63bec-888a-49ee-a321-81f3d8b4f838-profile_image-70x70.png',
+            'stream_url': "https://www.twitch.tv/kalel_soj_ttv",
+            'stream_service': 'Twitch',
+            'points': 0
+        },
+
+        {
+            'activision_id': 'kalelsonofjorel',
+            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/e6f63bec-888a-49ee-a321-81f3d8b4f838-profile_image-70x70.png',
+            'stream_url': "https://www.twitch.tv/kalel_soj_ttv",
+            'stream_service': 'Twitch',
+            'points': 0
+        },
+{
+            'activision_id': 'BriMc71',
+            'avatar_url': '',
+            'stream_url': "",
+            'stream_service': 'N/A',
+            'points': 0
+        },
+
+
+
+    ]
     return (
         <div>
             <CountDownTimer/>
-            <DisplayTwitchStreams />
+            <DisplayTwitchStreams/>
             <TournamentRules/>
-            <ParticipantList />
-            <LeaderBoard/>
+            <ParticipantList participants={participants}/>
+            <LeaderBoard participants={participants}/>
+            {/*<NewParticipantTable props={participants}/>*/}
+
 
         </div>
     );
