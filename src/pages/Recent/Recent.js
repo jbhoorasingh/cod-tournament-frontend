@@ -70,7 +70,8 @@ function TournamentCard(props) {
 
 
 function TournamentCardList(props) {
-    console.log(props)
+
+    console.log(props);
     return (
 
         props.props.map(tournament => (

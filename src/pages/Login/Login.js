@@ -25,7 +25,7 @@ export default function Login() {
   "password": "${password}"
 }`;
         console.log(data);
-        axios.post('http://10.0.0.241:5000/api/v1/auth/', data)
+        axios.post('http://localhost:5000/api/v1/auth/', data)
             .then((response) => {
                 console.log(response);
             }, (error) => {

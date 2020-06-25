@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import 'fontsource-roboto';
+import ReactTwitchEmbedVideo from "react-twitch-embed-video";
+import "./Home.css";
 
 const useStyles = makeStyles({
     table: {
@@ -19,10 +21,24 @@ const useStyles = makeStyles({
 
 // let theme = createMuiTheme();
 // theme = responsiveFontSizes(theme);
+//https://drive.google.com/uc?export=view&id=1qjEVTNJ_STdX6tl9qZEvlrLBln4qtqDb
+//let url_request ='https://drive.google.com/uc?export=view&id=1qjEVTNJ_STdX6tl9qZEvlrLBln4qtqDb'
+let url_request ='https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d'
+function getMoviesFromApiAsync() {
+   return fetch(url_request, {mode: 'cors'})
+   .then((response) => response.json())
+   .then((responseJson) => {
+       console.log(responseJson)
+     return responseJson.movies;
+   })
+   .catch((error) => {
+     console.error(error);
+   });
+}
 
 function CountDownTimer() {
     const calculateTimeLeft = () => {
-        const difference = +new Date("2020-06-25T18:00:00") - +new Date();
+        const difference = +new Date("2020-06-24T19:30:00") - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
@@ -65,8 +81,9 @@ function CountDownTimer() {
             <Typography variant="h2">2020 Week 26 - CoD Tournament</Typography>
             <Typography variant="h3">Free-For-All - Multiple Rounds</Typography>
             <div class="countdown-container">
-                {timerComponents.length ? timerComponents : <span>Game on!</span>}
+                {timerComponents.length ? timerComponents : <div>Game on!</div>}
             </div>
+
             <br/>
         </div>
 
@@ -129,6 +146,8 @@ function TournamentRules() {
 
 
 function ParticipantTable() {
+    console.log(`ParticipantTable`)
+    console.log()
     const participant_rows = [
         {
             'activision_id': 'ApacheBadIndian',
@@ -138,16 +157,25 @@ function ParticipantTable() {
         },
         {
             'activision_id': 'ParvDawg',
-            'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-50x50.png',
+            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/d15acf18-4c1c-4ad7-88ff-729f2bebf6b1-profile_image-70x70.png',
             'stream_url': 'https://www.twitch.tv/parvdawg',
             'stream_service': 'Twitch'
         },
         {
-            'activision_id': 'MigzzyLive',
-            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/1a6805cc-32cd-42e8-8bd7-32a94d31025d-profile_image-70x70.jpeg',
-            'stream_url': 'https://www.twitch.tv/migzzylive',
+            'activision_id': 'CreepyCap75',
+            'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/215b7342-def9-11e9-9a66-784f43822e80-profile_image-150x150.png',
+            'stream_url': 'https://www.twitch.tv/parvdawg',
             'stream_service': 'Twitch'
         },
+
+        {
+            'activision_id': 'DevilSon2127',
+            'avatar_url': '',
+            'stream_url': "#",
+            'stream_service': 'N/A'
+        },
+
+
 
     ]
     const classes = useStyles();
@@ -196,8 +224,9 @@ function LeaderBoardTable() {
             'stream_url': 'https://www.twitch.tv/apachebadindian',
             'stream_service': 'Twitch'
         },
-        {'activision_id': 'ParvDawg', 'stream_url': 'https://www.twitch.tv/parvdawg', 'stream_service': 'Twitch'},
-        {'activision_id': 'MigzzyLive', 'stream_url': 'https://www.twitch.tv/migzzylive', 'stream_service': 'Twitch'},
+        {'activision_id': 'ParvDawg',  'points': 0},
+        {'activision_id': 'CreepyCap75',  'points': 0},
+        {'activision_id': 'DevilSon2127', 'points': 0},
 
     ]
     const classes = useStyles();
@@ -237,15 +266,40 @@ function LeaderBoard() {
     )
 }
 
+function DisplayTwitchStreams() {
+    console.log("displaying twitch");
+    let participant_rows = [
+        {'stream_url': 'apachebadindian'},
+        {'stream_url': 'parvdawg'},
+        {'stream_url': 'creepycap75'},
+
+    ];
+    return(
+        <div id="stream-container">
+            {participant_rows.map((row) => (
+                    <ReactTwitchEmbedVideo
+            channel={row.stream_url}
+            layout="video"
+            height="260"
+            width="400"
+            muted={false}
+            theme="light"/>
+                    ))}
+
+            </div>
+    )
+}
 
 export default function HomePage() {
-
+    let participants = getMoviesFromApiAsync();
     return (
         <div>
             <CountDownTimer/>
+            <DisplayTwitchStreams />
             <TournamentRules/>
-            <ParticipantList/>
+            <ParticipantList />
             <LeaderBoard/>
+
         </div>
     );
 }
