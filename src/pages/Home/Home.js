@@ -248,9 +248,9 @@ function LeaderBoardTable(participants) {
                 <TableBody>
                     {participants.participants.participants.map((row) => (
                         <TableRow key={row.name}>
-                            <TableCell align="right">--</TableCell>
+                            <TableCell align="right">{row.rank}</TableCell>
                             <TableCell component="th" scope="row">{row.activision_id}</TableCell>
-                            <TableCell align="right">0</TableCell>
+                            <TableCell align="right">{row.points}</TableCell>
 
                         </TableRow>
                     ))}
@@ -351,62 +351,57 @@ export default function HomePage() {
             'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/d15acf18-4c1c-4ad7-88ff-729f2bebf6b1-profile_image-70x70.png',
             'stream_url': 'https://www.twitch.tv/apachebadindian',
             'stream_service': 'Twitch',
-            'points': 0
+            'points': 58,
+            'rank': 1
         },
         {
-            'activision_id': 'ParvDawg',
-            'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-70x70.png',
-            'stream_url': 'https://www.twitch.tv/parvdawg',
-            'stream_service': 'Twitch',
-            'points': 0
+            'activision_id': 'fittedgennaro',
+            'avatar_url': '',
+            'stream_url': "#",
+            'stream_service': 'N/A',
+            'points': 43,
+            'rank': 2
         },
         {
             'activision_id': 'CreepyCap75',
             'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/215b7342-def9-11e9-9a66-784f43822e80-profile_image-150x150.png',
             'stream_url': 'https://www.twitch.tv/parvdawg',
             'stream_service': 'Twitch',
-            'points': 0
+            'points': 36,
+            'rank': 3
         },
-
+        {
+            'activision_id': 'ParvDawg',
+            'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-70x70.png',
+            'stream_url': 'https://www.twitch.tv/parvdawg',
+            'stream_service': 'Twitch',
+            'points': 28,
+            'rank': 4
+        },
+        {
+            'activision_id': 'BriMc71',
+            'avatar_url': '',
+            'stream_url': "",
+            'stream_service': 'N/A',
+            'points': 25,
+            'rank': 5
+        },
+        {
+            'activision_id': 'kalelsonofjorel',
+            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/e6f63bec-888a-49ee-a321-81f3d8b4f838-profile_image-70x70.png',
+            'stream_url': "https://www.twitch.tv/kalel_soj_ttv",
+            'stream_service': 'Twitch',
+            'points': 19,
+            'rank': 6
+        },
         {
             'activision_id': 'DevilSon2127',
             'avatar_url': '',
             'stream_url': "#",
             'stream_service': 'N/A',
-            'points': 0
+            'points': 8,
+            'rank': 7
         },
-
-        {
-            'activision_id': 'fittedgennaro',
-            'avatar_url': '',
-            'stream_url': "#",
-            'stream_service': 'N/A',
-            'points': 0
-        },
-
-        {
-            'activision_id': 'kalelsonofjorel',
-            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/e6f63bec-888a-49ee-a321-81f3d8b4f838-profile_image-70x70.png',
-            'stream_url': "https://www.twitch.tv/kalel_soj_ttv",
-            'stream_service': 'Twitch',
-            'points': 0
-        },
-
-        {
-            'activision_id': 'kalelsonofjorel',
-            'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/e6f63bec-888a-49ee-a321-81f3d8b4f838-profile_image-70x70.png',
-            'stream_url': "https://www.twitch.tv/kalel_soj_ttv",
-            'stream_service': 'Twitch',
-            'points': 0
-        },
-{
-            'activision_id': 'BriMc71',
-            'avatar_url': '',
-            'stream_url': "",
-            'stream_service': 'N/A',
-            'points': 0
-        },
-
 
 
     ]
