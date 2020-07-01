@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import 'fontsource-roboto';
 import ReactTwitchEmbedVideo from "react-twitch-embed-video";
 import "./Home.css";
+import axios from "axios";
 
 const useStyles = makeStyles({
     table: {
@@ -39,7 +40,7 @@ function getMoviesFromApiAsync() {
 
 function CountDownTimer() {
     const calculateTimeLeft = () => {
-        const difference = +new Date("2020-06-25T19:30:00") - +new Date();
+        const difference = +new Date("2020-07-02T19:30:00") - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
@@ -79,8 +80,8 @@ function CountDownTimer() {
 
     return (
         <div>
-            <Typography variant="h2">2020 Week 26 - CoD Tournament</Typography>
-            <Typography variant="h3">Free-For-All - Multiple Rounds</Typography>
+            <Typography variant="h2">2020 Week 27 - CoD Tournament</Typography>
+            <Typography variant="h3">Random Teams - Multiple Rounds</Typography>
             <div class="countdown-container">
                 {timerComponents.length ? timerComponents : <div>Game on!</div>}
             </div>
@@ -93,12 +94,11 @@ function CountDownTimer() {
 
 function PointTable() {
     const point_table_rows = [
-        {'position': 1, 'earned_points': 10},
-        {'position': 2, 'earned_points': 8},
-        {'position': 3, 'earned_points': 6},
-        {'position': 4, 'earned_points': 4},
-        {'position': 5, 'earned_points': 2},
-        {'position': 6, 'earned_points': 1},
+        {'position': "team-win", 'earned_points': 3},
+        {'position': "team-lose", 'earned_points': 0},
+        {'position': "most-kills-in-game", 'earned_points': 1},
+        {'position': 'most-objective-points', 'earned_points':  1},
+        {'position': 'top-player-on-team', 'earned_points': 1},
     ]
     const classes = useStyles();
     return (
@@ -106,7 +106,7 @@ function PointTable() {
             <Table className={classes.table} aria-label="simple table" size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Postion</TableCell>
+                        <TableCell>Action</TableCell>
                         <TableCell align="right">Points Earned</TableCell>
 
                     </TableRow>
@@ -133,9 +133,13 @@ function TournamentRules() {
             <p>Player which accumulates the the highest points after the following matches will be crowned the
                 winner</p>
             <ul>
-                <li>3 hardcore: shipment, rust & shoothouse</li>
-                <li>3 core: shipment, rust & shoothouse</li>
-                <li>1 core gungame: picadilly</li>
+                <li>1 hardcore: domination: shipment (random teams)</li>
+                <li>1 hardcore: kill confirmed: shouthouse (random teams)</li>
+                <li>1 hardcore: team deathmatch: hardhat (random teams)</li>
+                <li>1 core: domination: shipment (random teams)</li>
+                <li>1 core: kill confirmed: shouthouse (random teams)</li>
+                <li>1 core: team deathmatch: hardhat (random teams)</li>
+                <li>2 game mode/map selected by player in last (team will be picked by last 2 players)</li>
             </ul>
 
             <Typography variant="h6">Points Table</Typography>
@@ -144,6 +148,52 @@ function TournamentRules() {
         </div>
     )
 }
+
+
+const ParticipantNewTable = () => {
+    const classes = useStyles();
+    const [data, setData] = useState([]); // initalizing the default state which is an empty array, []
+
+    useEffect(() => { // useEffect to call the get request on component load
+        const fetchData = async () => { //async function
+            const result = await axios( //awaits till request is completed
+                'https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d/3',
+            );
+
+            setData(result.data); //sets the state with the return data, result.data
+        };
+
+        fetchData(); //calls the fetchData function
+
+    }, []);
+
+    return (
+        <TableContainer component={Paper}>
+            <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                    <TableRow>
+                        <TableCell></TableCell>
+                        <TableCell>Activision ID</TableCell>
+                        <TableCell align="right">Stream</TableCell>
+
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {data.map((row) => (
+                        <TableRow key={row.name}>
+                            <TableCell align="right"><Avatar alt={row.activision_id}
+                                                             src={row.avatar_url}/></TableCell>
+                            <TableCell component="th" scope="row">{row.activision_id}</TableCell>
+                            <TableCell align="right"><a href={row.stream_url}>{row.stream_service}</a></TableCell>
+
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    )
+};
+
 
 
 function ParticipantTable(participants) {
@@ -212,27 +262,66 @@ function ParticipantList(participants) {
     return (
         <div>
             <Typography variant="h4">Participant List</Typography>
-            <ParticipantTable participants={participants}/>
-
+            {/*<ParticipantTable participants={participants}/>*/}
+            <ParticipantNewTable />
             <br/>
         </div>
     )
 }
 
 
+
+
+const LeaderboardNewTable = () => {
+    const classes = useStyles();
+    const [data, setData] = useState([]); // initalizing the default state which is an empty array, []
+
+    useEffect(() => { // useEffect to call the get request on component load
+        const fetchData = async () => { //async function
+            const result = await axios( //awaits till request is completed
+                'https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d/3',
+            );
+
+            setData(result.data); //sets the state with the return data, result.data
+        };
+
+        fetchData(); //calls the fetchData function
+
+    }, []);
+
+
+    return (
+
+
+    <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+                <TableRow>
+                    <TableCell>Postion</TableCell>
+                    <TableCell>Activision ID</TableCell>
+                    <TableCell align="right">Points</TableCell>
+
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {data.map((row) => (
+                    <TableRow key={row.name}>
+                        <TableCell align="right">{row.rank}</TableCell>
+                        <TableCell component="th" scope="row">{row.activision_id}</TableCell>
+                        <TableCell align="right">{row.points}</TableCell>
+
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+    </TableContainer>
+    );
+};
+
+
 function LeaderBoardTable(participants) {
     console.log(participants)
-    const participant_rows = [
-        {
-            'activision_id': 'ApacheBadIndian',
-            'stream_url': 'https://www.twitch.tv/apachebadindian',
-            'stream_service': 'Twitch'
-        },
-        {'activision_id': 'ParvDawg', 'points': 0},
-        {'activision_id': 'CreepyCap75', 'points': 0},
-        {'activision_id': 'DevilSon2127', 'points': 0},
 
-    ]
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
@@ -265,7 +354,8 @@ function LeaderBoard(participants) {
     return (
         <div>
             <Typography variant="h4">Leaderboard</Typography>
-            <LeaderBoardTable participants={participants}/>
+            {/*<LeaderBoardTable participants={participants}/>*/}
+            <LeaderboardNewTable />
         </div>
     )
 }
@@ -412,6 +502,7 @@ export default function HomePage() {
             <TournamentRules/>
             <ParticipantList participants={participants}/>
             <LeaderBoard participants={participants}/>
+
             {/*<NewParticipantTable props={participants}/>*/}
 
 
