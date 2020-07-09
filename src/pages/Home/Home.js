@@ -12,7 +12,6 @@ import Avatar from '@material-ui/core/Avatar';
 import 'fontsource-roboto';
 import ReactTwitchEmbedVideo from "react-twitch-embed-video";
 import "./Home.css";
-import axios from "axios";
 
 const useStyles = makeStyles({
     table: {
@@ -40,7 +39,7 @@ function getMoviesFromApiAsync() {
 
 function CountDownTimer() {
     const calculateTimeLeft = () => {
-        const difference = +new Date("2020-07-02T19:30:00") - +new Date();
+        const difference = +new Date("2020-07-09T19:30:00") - +new Date();
         let timeLeft = {};
 
         if (difference > 0) {
@@ -80,8 +79,8 @@ function CountDownTimer() {
 
     return (
         <div>
-            <Typography variant="h2">2020 Week 27 - CoD Tournament</Typography>
-            <Typography variant="h3">Random Teams - Multiple Rounds</Typography>
+            <Typography variant="h2">2020 Week 28 - CoD Tournament</Typography>
+            <Typography variant="h3">Inaugural Iron Man</Typography>
             <div class="countdown-container">
                 {timerComponents.length ? timerComponents : <div>Game on!</div>}
             </div>
@@ -94,11 +93,10 @@ function CountDownTimer() {
 
 function PointTable() {
     const point_table_rows = [
-        {'position': "team-win", 'earned_points': 3},
-        {'position': "team-lose", 'earned_points': 0},
-        {'position': "most-kills-in-game", 'earned_points': 1},
-        {'position': 'most-objective-points', 'earned_points':  1},
-        {'position': 'top-player-on-team', 'earned_points': 1},
+        {'position': 'points per kill', 'earned_points': '+1'},
+        {'position': 'points per death', 'earned_points': '-1'},
+        {'position': 'team win', 'earned_points': '+6'},
+        {'position': 'team lose', 'earned_points': '-3'}
     ]
     const classes = useStyles();
     return (
@@ -106,7 +104,7 @@ function PointTable() {
             <Table className={classes.table} aria-label="simple table" size="small">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Action</TableCell>
+                        <TableCell>Postion</TableCell>
                         <TableCell align="right">Points Earned</TableCell>
 
                     </TableRow>
@@ -130,16 +128,11 @@ function TournamentRules() {
     return (
         <div>
             <Typography variant="h4">Tournament Rules</Typography>
-            <p>Player which accumulates the the highest points after the following matches will be crowned the
-                winner</p>
+            <p>1:4 Ratio Team Death Match, Kill Confirm, Search and Destroy. Iron man team will 1 player for every 4 player on the opposite team (Smelting Team). Iron Man team will round up, <pre>i.e. - if the Smelting has 5 players IronMan has 2; Smelting 9, IronMan 3</pre> </p>
             <ul>
-                <li>1 hardcore: domination: shipment (random teams)</li>
-                <li>1 hardcore: kill confirmed: shouthouse (random teams)</li>
-                <li>1 hardcore: team deathmatch: hardhat (random teams)</li>
-                <li>1 core: domination: shipment (random teams)</li>
-                <li>1 core: kill confirmed: shouthouse (random teams)</li>
-                <li>1 core: team deathmatch: hardhat (random teams)</li>
-                <li>2 game mode/map selected by player in last (team will be picked by last 2 players)</li>
+                <li>3 TDM - [ironman picks gamemode] - shipment, hardhat & shoothouse</li>
+                <li>3 Killconfirm - [ironman picks gamemode] - shipment, hardhat & shoothouse</li>
+                <li>2 search and destroy: [ironman picks gamemode] hardhat</li>
             </ul>
 
             <Typography variant="h6">Points Table</Typography>
@@ -148,52 +141,6 @@ function TournamentRules() {
         </div>
     )
 }
-
-
-const ParticipantNewTable = () => {
-    const classes = useStyles();
-    const [data, setData] = useState([]); // initalizing the default state which is an empty array, []
-
-    useEffect(() => { // useEffect to call the get request on component load
-        const fetchData = async () => { //async function
-            const result = await axios( //awaits till request is completed
-                'https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d/3',
-            );
-
-            setData(result.data); //sets the state with the return data, result.data
-        };
-
-        fetchData(); //calls the fetchData function
-
-    }, []);
-
-    return (
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Activision ID</TableCell>
-                        <TableCell align="right">Stream</TableCell>
-
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map((row) => (
-                        <TableRow key={row.name}>
-                            <TableCell align="right"><Avatar alt={row.activision_id}
-                                                             src={row.avatar_url}/></TableCell>
-                            <TableCell component="th" scope="row">{row.activision_id}</TableCell>
-                            <TableCell align="right"><a href={row.stream_url}>{row.stream_service}</a></TableCell>
-
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    )
-};
-
 
 
 function ParticipantTable(participants) {
@@ -262,66 +209,27 @@ function ParticipantList(participants) {
     return (
         <div>
             <Typography variant="h4">Participant List</Typography>
-            {/*<ParticipantTable participants={participants}/>*/}
-            <ParticipantNewTable />
+            <ParticipantTable participants={participants}/>
+
             <br/>
         </div>
     )
 }
 
 
-
-
-const LeaderboardNewTable = () => {
-    const classes = useStyles();
-    const [data, setData] = useState([]); // initalizing the default state which is an empty array, []
-
-    useEffect(() => { // useEffect to call the get request on component load
-        const fetchData = async () => { //async function
-            const result = await axios( //awaits till request is completed
-                'https://api.jsonbin.io/b/5ef4dfd797cb753b4d17c42d/3',
-            );
-
-            setData(result.data); //sets the state with the return data, result.data
-        };
-
-        fetchData(); //calls the fetchData function
-
-    }, []);
-
-
-    return (
-
-
-    <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-                <TableRow>
-                    <TableCell>Postion</TableCell>
-                    <TableCell>Activision ID</TableCell>
-                    <TableCell align="right">Points</TableCell>
-
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {data.map((row) => (
-                    <TableRow key={row.name}>
-                        <TableCell align="right">{row.rank}</TableCell>
-                        <TableCell component="th" scope="row">{row.activision_id}</TableCell>
-                        <TableCell align="right">{row.points}</TableCell>
-
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    </TableContainer>
-    );
-};
-
-
 function LeaderBoardTable(participants) {
     console.log(participants)
+    const participant_rows = [
+        {
+            'activision_id': 'ApacheBadIndian',
+            'stream_url': 'https://www.twitch.tv/apachebadindian',
+            'stream_service': 'Twitch'
+        },
+        {'activision_id': 'ParvDawg', 'points': 0},
+        {'activision_id': 'CreepyCap75', 'points': 0},
+        {'activision_id': 'DevilSon2127', 'points': 0},
 
+    ]
     const classes = useStyles();
     return (
         <TableContainer component={Paper}>
@@ -354,8 +262,7 @@ function LeaderBoard(participants) {
     return (
         <div>
             <Typography variant="h4">Leaderboard</Typography>
-            {/*<LeaderBoardTable participants={participants}/>*/}
-            <LeaderboardNewTable />
+            <LeaderBoardTable participants={participants}/>
         </div>
     )
 }
@@ -441,56 +348,56 @@ export default function HomePage() {
             'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/d15acf18-4c1c-4ad7-88ff-729f2bebf6b1-profile_image-70x70.png',
             'stream_url': 'https://www.twitch.tv/apachebadindian',
             'stream_service': 'Twitch',
-            'points': 58,
-            'rank': 1
+            'points': 0,
+            'rank': 0
         },
         {
             'activision_id': 'fittedgennaro',
             'avatar_url': '',
             'stream_url': "#",
             'stream_service': 'N/A',
-            'points': 43,
-            'rank': 2
+            'points': 0,
+            'rank': 0
         },
         {
             'activision_id': 'CreepyCap75',
             'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/215b7342-def9-11e9-9a66-784f43822e80-profile_image-150x150.png',
             'stream_url': 'https://www.twitch.tv/parvdawg',
             'stream_service': 'Twitch',
-            'points': 36,
-            'rank': 3
+            'points': 0,
+            'rank': 0
         },
         {
             'activision_id': 'ParvDawg',
             'avatar_url': 'https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-70x70.png',
             'stream_url': 'https://www.twitch.tv/parvdawg',
             'stream_service': 'Twitch',
-            'points': 28,
-            'rank': 4
+            'points': 0,
+            'rank': 0
         },
         {
             'activision_id': 'BriMc71',
             'avatar_url': '',
             'stream_url': "",
             'stream_service': 'N/A',
-            'points': 25,
-            'rank': 5
+            'points': 0,
+            'rank': 0
         },
         {
             'activision_id': 'kalelsonofjorel',
             'avatar_url': 'https://static-cdn.jtvnw.net/jtv_user_pictures/e6f63bec-888a-49ee-a321-81f3d8b4f838-profile_image-70x70.png',
             'stream_url': "https://www.twitch.tv/kalel_soj_ttv",
             'stream_service': 'Twitch',
-            'points': 19,
-            'rank': 6
+            'points': 0,
+            'rank': 0
         },
         {
             'activision_id': 'DevilSon2127',
             'avatar_url': '',
             'stream_url': "#",
             'stream_service': 'N/A',
-            'points': 8,
-            'rank': 7
+            'points': 0,
+            'rank': 0
         },
 
 
@@ -502,7 +409,6 @@ export default function HomePage() {
             <TournamentRules/>
             <ParticipantList participants={participants}/>
             <LeaderBoard participants={participants}/>
-
             {/*<NewParticipantTable props={participants}/>*/}
 
 
